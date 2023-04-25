@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/Kristers/Desktop/Restaurant%20menu.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Restaurant menu</title>
+    <style>
+      body {
+        background-image: url('https://cdn.sortiraparis.com/images/80/100789/834083-too-restaurant-too-hotel-paris-photos-menu-plats.jpg');
+        background-size: cover auto;
+        background-position:middle;
+        background-repeat: no-repeat;
+        background-color: black;
+      }
+      .container {
+        background-color: rgba(202, 202, 202, 0.692);
+        padding: 20px;
+        border-radius: 10px;
+        margin: auto;
+        margin-top: 60px;
+        max-width: 500px;
+      }
+      label {
+        display: block;
+        margin-bottom: 40px;
+      }
+      input[type="text"], textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #52ec23;
+        border-radius: 3px;
+        box-sizing: border-box;
+      }
+      input[type="file"] {
+        margin-bottom: 20px;
+      }
+      button[type="submit"] {
+        background-color: #06dd9d83;
+        color: rgb(255, 251, 251);
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add new items to restaurants menu</h1>
+        <form id="menuForm" enctype="multipart/form-data">
+            <label for="name">Foods/items Name:</label>
+            <input type="text" id="name" name="name" required="">
+            
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required=""></textarea>
+            
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" required="">
+            
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image">
+            
+            <button type="submit">Add Item</button>
+        </form>
+        
+        <script>
+            const form = document.getElementById('menuForm');
+            
+            form.addEventListener('submit', (event) => {
+              event.preventDefault();
+              
+              const formData = new FormData(form);
+              
+              fetch('/api/addMenuItem.php', {
+                method: 'POST',
+                body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                alert('Menu item added successfully!');
+                form.reset();
+              })
+              .catch(error => {
+                console.error(error);
+                alert('Error adding menu item.');
+              });
+            });
+        </script>
+    </div>
+
+
+</body></html>
